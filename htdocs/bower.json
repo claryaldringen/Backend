@@ -1,0 +1,18 @@
+{
+  "name": "SimpleCMS",
+  "version": "0.1.0",
+  "homepage": "https://github.com/claryaldringen/SimpleCMS",
+  "authors": [
+    "Martin Zadražil <zadram1@gmail.com>"
+  ],
+  "description": "Simple Content Management System",
+  "license": "GNU",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "codemirror": "~4.10.0",
+    "bootstrap": "~3.3.1",
+    "ckeditor": "#full/stable",
+    "Sortable": "~1.0.1"
+  }
+}

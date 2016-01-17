@@ -1,0 +1,9 @@
+parameters:
+		database:
+			host: localhost
+			username: root
+			password:
+			database: 318_cms
+			profiler: TRUE
+		siteId: 1
+		adminHost: www.simplecms.dev

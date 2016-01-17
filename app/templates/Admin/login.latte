@@ -1,0 +1,26 @@
+{layout '@layout.latte'}
+
+{block css}
+		<link rel="stylesheet" type="text/css" href="{$baseUri}/bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="{$baseUri}/stylus/login.css">
+{/block}
+
+{block body}
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3">
+					<div class="panel panel-default">
+						<div class="panel-heading">Přihlášení</div>
+						<div class="panel-body">
+							{foreach $flashes as $flash}
+								<div class="alert alert-danger">{$flash->message}</div>
+							{/foreach}
+							{control loginForm}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+{/block}
