@@ -9,6 +9,7 @@
 class AjaxPresenter extends \Nette\Application\UI\Presenter{
 
 	public function renderDefault() {
+		\Tracy\Debugger::enable(\Tracy\Debugger::PRODUCTION);
 		$session = $this->getSession('cms');
 		$this->context->getService('menuModel')->setSiteId($session->siteId);
 		$this->context->getService('configurationModel')->setLanguageId($session->languageId);
@@ -17,7 +18,7 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 			$this->template->response = $this->{$post['action']}(json_decode($post['data']));
 		} catch(Exception $ex) {
 			$this->template->response = array('error' => $ex->getMessage() . 'on line ' . $ex->getLine() . ' at ' . $ex->getFile() . "\n\n" . $ex->getTraceAsString());
-			NDebugger::log($ex);
+			\Tracy\Debugger::log($ex);
 		}
 	}
 
@@ -157,14 +158,12 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 	}
 
 	protected function saveAudio($data) {
-		NDebugger::$consoleMode = true;
 		$this->context->getService('galleryModel')->saveImages($this->request->getFiles(), $this->context->getService('galleryModel')->getFolderIdFromMenuId($this->context->getService('menuModel')->getIdOfGeneralGallery()));
 		$info = $this->context->getService('galleryModel')->getUploadedFilesInfo();
 		return array('fileId' => $info[0]['id'], 'hash' => $info[0]['hash'], 'album' => $data->album, 'song' => $data->song);
 	}
 
 	protected function saveAlbumImage($data) {
-		NDebugger::$consoleMode = true;
 		$this->context->getService('galleryModel')->saveImages($this->request->getFiles(), $this->context->getService('galleryModel')->getFolderIdFromMenuId($this->context->getService('menuModel')->getIdOfGeneralGallery()));
 		$info = $this->context->getService('galleryModel')->getUploadedFilesInfo();
 		return array('fileId' => $info[0]['id'], 'hash' => $info[0]['hash'], 'album' => $data->album);
@@ -220,7 +219,6 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 	}
 
 	protected function saveConcertImage($data) {
-		NDebugger::$consoleMode = true;
 		$this->context->getService('galleryModel')->saveImages($this->request->getFiles(), $this->context->getService('galleryModel')->getFolderIdFromMenuId($this->context->getService('menuModel')->getIdOfGeneralGallery()));
 		$info = $this->context->getService('galleryModel')->getUploadedFilesInfo();
 		return array('fileId' => $info[0]['id'], 'hash' => $info[0]['hash']);
