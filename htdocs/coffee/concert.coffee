@@ -6,6 +6,9 @@ class Cms.Concert extends CJS.Component
 		@saving = no
 
 	setConcert: (@concert) ->
+		datetime = @concert.start_time.split('T')
+		@concert.date = datetime[0]
+		@concert.time = datetime[1]
 		@saving = no
 		@
 
@@ -37,15 +40,12 @@ class Cms.Concert extends CJS.Component
 	save: ->
 		@saving = yes
 		@render()
+		@concert.time = '00:00' if not @concert.time?
+		@concert.start_time = @concert.date + 'T' + @concert.time
 		@sendRequest('saveConcert', @concert, @saveResponse)
 
 	saveResponse: (response) ->
-		if response.id?
-			@concert.id = response.id*1
-			@saving = no
-			@render()
-		else
-			@getParent().loadResponse(response)
+		@getParent().loadResponse(response)
 		@
 
 	remove: -> @sendRequest('removeConcert', {id: @concert.id, menuId: @concert.menu_id}, @removeResponse)
@@ -57,7 +57,8 @@ class Cms.Concert extends CJS.Component
 	change: (element) ->
 		@upload(element.files) if element.hasClass('doUploadImage')
 		@concert.name = element.value if element.hasClass('doChangeName')
-		@concert.start_time = element.value if element.hasClass('doChangeStartTime')
+		@concert.date = element.value if element.hasClass('doChangeDate')
+		@concert.time = element.value if element.hasClass('doChangeTime')
 		@concert.place = element.value if element.hasClass('doChangePlace')
 		@concert.ticket_uri = element.value if element.hasClass('doChangeTicketUri')
 
@@ -68,11 +69,12 @@ class Cms.Concert extends CJS.Component
 	getHtml: ->
 		html = '<div class="concert"><table>'
 		html += '<tr>'
-		html += '<td rowspan="4"><div class="concert-image" style="' + (if @concert.image? then 'background-image: url(\'./images/userimages/medium/' + @concert.image + '.jpg\')' else 'background: #FFF') + '">'
+		html += '<td rowspan="5"><div class="concert-image" style="' + (if @concert.image? then 'background-image: url(\'./images/userimages/medium/' + @concert.image + '.jpg\')' else 'background: #FFF') + '">'
 		html += '<input type="file" class="form-control input-sm doUploadImage"></div></td>'
 		html += '<td>Název: </td><td><input type="text" class="form-control input-sm doChangeName" value="' + @concert.name + '"></td>'
 		html += '</tr>'
-		html += '<tr><td>Datum: </td><td><input type="datetime-local" class="form-control input-sm doChangeStartTime" value="' + @concert.start_time + '"></td></tr>'
+		html += '<tr><td>Datum: </td><td><input type="date" class="form-control input-sm doChangeDate" value="' + @concert.date + '"></td></tr>'
+		html += '<tr><td>Čas: </td><td><input type="time" class="form-control input-sm doChangeTime" value="' + @concert.time + '"></td></tr>'
 		html += '<tr><td>Místo: </td><td><input type="text" class="form-control input-sm doChangePlace" value="' + @concert.place + '"></td></tr>'
 		html += '<tr><td>URL vstupenek: </td><td><input type="url" class="form-control input-sm doChangeTicketUri" value="' + @concert.ticket_uri + '"></td></tr>'
 		html += '<tr><td colspan="3">'

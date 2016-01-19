@@ -40,3 +40,6 @@ services:
     commentModel: CommentModel(@configurationModel, @library)
     concertModel: ConcertModel(@configurationModel)
     authenticator: @userModel
+
+tracy:
+    email: admin@example.com

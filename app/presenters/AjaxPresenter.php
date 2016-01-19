@@ -225,13 +225,9 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 	}
 
 	protected function saveConcert($data) {
-		$id = $this->context->getService('concertModel')->saveConcert($data);
-		if(!empty($data->id)) {
-			$concerts = $this->context->getService('concertModel')->getConcerts($data->menu_id);
-			return array('concerts' => $concerts);
-		} else {
-			return array('id' => $id);
-		}
+		$this->context->getService('concertModel')->saveConcert($data);
+		$concerts = $this->context->getService('concertModel')->getConcerts($data->menu_id);
+		return array('concerts' => $concerts);
 	}
 
 	protected function removeConcert($data) {
