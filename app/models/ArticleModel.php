@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: clary
- * Date: 2.11.15
- * Time: 17:13
- */
 class ArticleModel extends BaseModel{
 
 	/** @var NameModel */

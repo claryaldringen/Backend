@@ -39,6 +39,7 @@ services:
     userModel: UserModel(@configurationModel)
     commentModel: CommentModel(@configurationModel, @library)
     concertModel: ConcertModel(@configurationModel)
+    siteModel: SiteModel(@configurationModel)
     authenticator: @userModel
 
 tracy:

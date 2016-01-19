@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: clary
- * Date: 15.11.14
- * Time: 18:17
- */
 
 class AdminPresenter extends \Nette\Application\UI\Presenter{
 
@@ -34,7 +28,6 @@ class AdminPresenter extends \Nette\Application\UI\Presenter{
 		if(!$this->getUser()->isLoggedIn()) $this->redirect('login');
 		$session = $this->getSession('cms');
 		if(!isset($session->languageId)) $session->languageId = $this->context->getService('configurationModel')->getLanguageId();
-
 	}
 
 	public function actionSetSite($siteId) {
@@ -54,5 +47,9 @@ class AdminPresenter extends \Nette\Application\UI\Presenter{
 	public function actionFileBrowser() {
 		$this->context->getService('menuModel')->setSiteId($this->getSession('cms')->siteId);
 		$this->template->generallGalleryId = $this->context->getService('menuModel')->getIdOfGeneralGallery();
+	}
+
+	public function renderDefault() {
+		$this->template->title = $this->context->getService('siteModel')->getSiteName($this->getSession('cms')->siteId);
 	}
 }
