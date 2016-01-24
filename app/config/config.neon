@@ -1,46 +1,46 @@
 parameters:
-    database:
-        host:
-        username:
-        password:
-        database:
-        lazy: TRUE
-    mail: 'foo@localhost.dev'
-    adminHost: cms.freetech.cz
-    languageId: 36
-    siteId: 0
+	database:
+		host:
+		username:
+		password:
+		database:
+		lazy: TRUE
+	mail: 'foo@localhost.dev'
+	adminHost: cms.freetech.cz
+	languageId: 36
+	siteId: 0
 php:
-    date.timezone: Europe/Prague
-    # zlib.output_compression: yes
+	date.timezone: Europe/Prague
+	# zlib.output_compression: yes
 
 nette:
-    application:
-        errorPresenter: Error
+	application:
+		errorPresenter: Error
 
-    session:
-        expiration: 14 days
+	session:
+		expiration: 14 days
 
 
 services:
-    routerFactory: RouterFactory
-    router: @routerFactory::createRouter
-    db: Dibi\Connection(%database%)
-    configurationModel: ConfigurationModel(@db, %siteId%, %languageId%)
-    library: Library
-    textModel: TextModel(@configurationModel)
-    nameModel: NameModel(@configurationModel, @textModel)
-    menuModel: MenuModel(@configurationModel, @nameModel, @library)
-    pageModel: PageModel(@configurationModel, @nameModel)
-    articleModel: ArticleModel(@configurationModel, @nameModel)
-    discographyModel: DiscographyModel(@configurationModel, @nameModel)
-    typeModel: TypeModel(@configurationModel)
-    galleryModel: GalleryModel(@configurationModel, @nameModel)
-    languageModel: LanguageModel(@configurationModel)
-    userModel: UserModel(@configurationModel)
-    commentModel: CommentModel(@configurationModel, @library)
-    concertModel: ConcertModel(@configurationModel)
-    siteModel: SiteModel(@configurationModel)
-    authenticator: @userModel
+	routerFactory: RouterFactory
+	router: @routerFactory::createRouter
+	db: Dibi\Connection(%database%)
+	configurationModel: ConfigurationModel(@db, %siteId%, %languageId%)
+	library: Library
+	textModel: TextModel(@configurationModel)
+	nameModel: NameModel(@configurationModel, @textModel)
+	menuModel: MenuModel(@configurationModel, @nameModel, @library)
+	pageModel: PageModel(@configurationModel, @nameModel)
+	articleModel: ArticleModel(@configurationModel, @nameModel)
+	discographyModel: DiscographyModel(@configurationModel, @nameModel)
+	typeModel: TypeModel(@configurationModel)
+	galleryModel: GalleryModel(@configurationModel, @nameModel)
+	languageModel: LanguageModel(@configurationModel)
+	userModel: UserModel(@configurationModel)
+	commentModel: CommentModel(@configurationModel, @library)
+	concertModel: ConcertModel(@configurationModel)
+	siteModel: SiteModel(@configurationModel)
+	authenticator: @userModel
 
 tracy:
-    email: admin@example.com
+	email: info@freetech.cz
