@@ -52,4 +52,8 @@ class AdminPresenter extends \Nette\Application\UI\Presenter{
 	public function renderDefault() {
 		$this->template->title = $this->context->getService('siteModel')->getSiteName($this->getSession('cms')->siteId);
 	}
+
+	public function renderLogin() {
+		$this->template->title = $this->context->getService('siteModel')->getSiteName($this->getSession('cms')->siteId);
+	}
 }

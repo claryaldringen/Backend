@@ -136,7 +136,8 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 	}
 
 	protected function loadArticles($data) {
-		return array('articles' => $this->context->getService('articleModel')->getArticles($data->pageId));
+		$model = $this->context->getService('articleModel');
+		return array('articles' => $model->getArticles($data->pageId), 'length' => $model->getLength($data->pageId));
 	}
 
 	protected function loadArticle($data) {
@@ -233,5 +234,9 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 	protected function removeConcert($data) {
 		$concerts = $this->context->getService('concertModel')->removeConcert($data->id)->getConcerts($data->menuId);
 		return array('concerts' => $concerts);
+	}
+
+	protected function saveArticleLength($data) {
+		$this->context->getService('articleModel')->setLength($data->menuId, $data->length);
 	}
 }

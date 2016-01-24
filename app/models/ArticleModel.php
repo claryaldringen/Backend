@@ -59,4 +59,23 @@ class ArticleModel extends BaseModel{
 		$this->db->query("DELETE FROM article WHERE id=%i", $articleId);
 		return $this;
 	}
+
+	public function getLength($menuId) {
+		$length = $this->db->query("SELECT [length] FROM article_setting WHERE menu_id=?", $menuId)->fetchSingle();
+		if(empty($length) && $length !== 0) $length = null;
+		return $length;
+	}
+
+	public function setLength($menuId, $length = null) {
+		$this->db->begin();
+		try {
+			$this->db->query("DELETE FROM article_setting WHERE menu_id=?", $menuId);
+			if ($length !== null) $this->db->query("INSERT INTO article_setting", array('menu_id' => $menuId, 'length' => $length));
+		} catch(Exception $ex) {
+			$this->db->rollback();
+			throw $ex;
+		}
+		$this->db->commit();
+		return $this;
+	}
 }

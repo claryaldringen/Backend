@@ -11,6 +11,7 @@ class Cms.Articles extends CJS.Component
 
 	loadResponse: (response) ->
 		@articles = response.articles
+		@length = response.length
 		@render()
 
 	getWysiwyg: (index) ->
@@ -49,6 +50,13 @@ class Cms.Articles extends CJS.Component
 				@articles.splice(index, 1)
 				@render()
 
+	change: (element) ->
+		if element.hasClass('doChangeShowType')
+			if element.selectedIndex then @length = 1024 else @length = null
+			@render()
+		@length = element.value if element.hasClass('doChangeLength')
+		@sendRequest('saveArticleLength', {menuId: @menuId, length: @length})
+
 	beforeRender: ->
 		@scroll = document.querySelector('.article_container').scrollTop;
 
@@ -61,6 +69,11 @@ class Cms.Articles extends CJS.Component
 		html += '<div class="toolbar controls form-inline">'
 		html += '<button class="btn btn-sm btn-default doCreateArticle">Vytvořit nový článek</button>'
 		html += '<button class="btn btn-sm btn-default doCloseEditor">Zavřít editor</button>' if @opened?
+		html += '&nbsp;<select class="form-control input-sm doChangeShowType">'
+		html += '<option value="0">Zobrazovat celé články</option>'
+		html += '<option value="1" ' + (if @length? then 'selected' else '') + '>Zobrazovat pouze náhledy článků</option>'
+		html += '</select>'
+		html += '&nbsp;Délka náhledu: <input type="number" value="' + @length + '" class="form-control input-sm doChangeLength"> znaků' if @length?
 		html += '</div>'
 		html += '<div class="article_container" style="height: ' + (@getHeight() - 82) + 'px">'
 		if @articles?
