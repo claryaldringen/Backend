@@ -39,17 +39,18 @@ class ArticleModel extends BaseModel{
 	public function setArticle($menuId, $text, $id = NULL) {
 		$this->db->begin();
 		try {
-				$nameId = $this->nameModel->setName($text, 'article', FALSE);
-				if($id) {
-					$this->db->query("UPDATE [article] SET name_id=%i WHERE id=%i", $nameId, $id);
-				} else {
-					$this->db->query("INSERT INTO [article] (menu_id, name_id) VALUES (%i, %i)", $menuId, $nameId);
-					$id = $this->db->getInsertId();
-				}
-				$this->nameModel->clear('article');
+			$nameId = $this->nameModel->setName($text, 'article', FALSE);
+			if($id) {
+				$this->db->query("UPDATE [article] SET name_id=%i WHERE id=%i", $nameId, $id);
+			} else {
+				$this->db->query("INSERT INTO [article] (menu_id, name_id) VALUES (%i, %i)", $menuId, $nameId);
+				$id = $this->db->getInsertId();
+			}
+			$this->setArticleUrl($text, $menuId, $id, $nameId);
+			$this->nameModel->clear('article');
 		}catch (Exception $ex) {
-				$this->db->rollback();
-				throw $ex;
+			$this->db->rollback();
+			throw $ex;
 		}
 		$this->db->commit();
 		return $id;
@@ -78,4 +79,29 @@ class ArticleModel extends BaseModel{
 		$this->db->commit();
 		return $this;
 	}
+
+	protected function setArticleUrl($text, $menuId, $articleId, $nameId) {
+		for($number = 1; $number < 7; $number++) {
+			$start = strpos($text, '<h' . $number . '>');
+			$end = strpos($text, '</h' . $number . '>');
+			if($start !== false && $end !== false) {
+				$caption = \Nette\Utils\Strings::webalize(html_entity_decode(substr($text, $start + 4, $end - ($start + 4))));
+				if(!$this->checkCaption($menuId, $caption, $articleId)) $caption .= '-' . $articleId;
+				$this->nameModel->setUrl($nameId, $caption);
+				return $this;
+			}
+		}
+		throw new CmsException('Článek nemá žádný nadpis. Doplňte prosím chybějící nadpis a uložte článek znovu.');
+	}
+
+	private function checkCaption($menuId, $url, $articleId) {
+		$sql = "SELECT a.id FROM article a
+			JOIN name_has_text nht ON nht.name_id=a.name_id AND nht.language_id=%i
+			JOIN text t ON t.id=nht.text_id
+			WHERE a.menu_id=%i AND url=%s AND a.id != %i";
+
+		$row = $this->db->query($sql, $this->getLanguageId(), $menuId, $url, $articleId)->fetchSingle();
+		return empty($row);
+	}
+
 }

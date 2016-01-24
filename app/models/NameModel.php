@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: clary
- * Date: 29.11.14
- * Time: 12:40
- */
 
 class NameModel extends BaseModel{
 
@@ -57,4 +51,10 @@ class NameModel extends BaseModel{
 		$this->db->query($sql);
 		return $this;
 	}
-} 
+
+	public function setUrl($nameId, $url) {
+		$textId = $this->db->query("SELECT text_id FROM name_has_text WHERE name_id=%i AND language_id=%i", $nameId, $this->getLanguageId())->fetchSingle();
+		$this->textModel->setUrl($textId, $url);
+		return $this;
+	}
+}

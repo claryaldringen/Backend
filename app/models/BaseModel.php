@@ -4,7 +4,7 @@ use Nette;
 
 class BaseModel extends Nette\Object{
 
-	/** @var DibiConnection */
+	/** @var Dibi\Connection */
 	protected $db;
 
 	protected $languageId = 1;

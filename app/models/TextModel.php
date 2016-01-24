@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: clary
- * Date: 29.11.14
- * Time: 12:57
- */
 
 class TextModel extends BaseModel{
 
@@ -20,5 +14,10 @@ class TextModel extends BaseModel{
 			$textId = $this->db->getInsertId();
 		}
 		return $textId;
+	}
+
+	public function setUrl($textId, $url) {
+		$this->db->query("UPDATE [text] SET url=%s WHERE id=%i", $url, $textId);
+		return $this;
 	}
 } 

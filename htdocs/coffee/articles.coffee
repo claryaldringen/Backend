@@ -10,9 +10,12 @@ class Cms.Articles extends CJS.Component
 	load: -> @sendRequest('loadArticles', {pageId: @menuId}, @loadResponse)
 
 	loadResponse: (response) ->
-		@articles = response.articles
-		@length = response.length
-		@render()
+		if not response.error?
+			@articles = response.articles
+			@length = response.length
+			@render()
+		else
+			alert(response.error)
 
 	getWysiwyg: (index) ->
 		id = @id + '_wysiwyg'

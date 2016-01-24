@@ -17,8 +17,12 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 		try {
 			$this->template->response = $this->{$post['action']}(json_decode($post['data']));
 		} catch(Exception $ex) {
-			$this->template->response = array('error' => $ex->getMessage() . 'on line ' . $ex->getLine() . ' at ' . $ex->getFile() . "\n\n" . $ex->getTraceAsString());
-			\Tracy\Debugger::log($ex);
+			if ($ex instanceof CmsException) {
+				$this->template->response = array('errorCode' => 2,'error' => $ex->getMessage());
+			} else {
+				$this->template->response = array('errorCode' => 1, 'error' => $ex->getMessage() . 'on line ' . $ex->getLine() . ' at ' . $ex->getFile() . "\n\n" . $ex->getTraceAsString());
+				\Tracy\Debugger::log($ex);
+			}
 		}
 	}
 
