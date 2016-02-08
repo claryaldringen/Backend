@@ -52,6 +52,12 @@ class Cms.Articles extends CJS.Component
 			else
 				@articles.splice(index, 1)
 				@render()
+		if element.hasClass('doMoveDown')
+			index = element.dataset.index
+			@sendRequest('moveArticle', {articleId: @articles[index].id, menuId: @menuId, order: 'down'}, @loadResponse)
+		if element.hasClass('doMoveUp')
+			index = element.dataset.index
+			@sendRequest('moveArticle', {articleId: @articles[index].id, menuId: @menuId, order: 'up'}, @loadResponse)
 
 	change: (element) ->
 		if element.hasClass('doChangeShowType')
@@ -87,7 +93,9 @@ class Cms.Articles extends CJS.Component
 				else
 					html += '<div class="article">' + article.html.substring(0,1024)
 					html += '&nbsp;&nbsp;&nbsp;<button class="btn btn-sm btn-primary doEdit" data-index="' + index + '">Editovat</button>&nbsp;&nbsp;&nbsp;'
-					html += '<button class="btn btn-sm btn-danger doRemove" data-index="' + index + '">Smazat</button>'
+					html += '<button class="btn btn-sm btn-danger doRemove" data-index="' + index + '">Smazat</button>&nbsp;&nbsp;&nbsp;'
+					html += '<button class="btn btn-sm btn-default doMoveDown" data-index="' + index + '">Posunout dolů</button>&nbsp;&nbsp;&nbsp;' if article.id? and index isnt @articles.length-1
+					html += '<button class="btn btn-sm btn-default doMoveUp" data-index="' + index + '">Posunout nahoru</button>' if article.id? and index > 0
 					html += '</div>'
 		else
 			html += 'Loading...'

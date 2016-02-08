@@ -154,8 +154,9 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 	}
 
 	protected function removeArticle($data) {
-		$this->context->getService('articleModel')->removeArticle($data->articleId);
-		return array('articles' => $this->context->getService('articleModel')->getArticles($data->menuId));
+		$model = $this->context->getService('articleModel');
+		$model->removeArticle($data->articleId);
+		return array('articles' => $model->getArticles($data->menuId), 'length' => $model->getLength($data->menuId));
 	}
 
 	protected function loadTypes() {
@@ -242,5 +243,11 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 
 	protected function saveArticleLength($data) {
 		$this->context->getService('articleModel')->setLength($data->menuId, $data->length);
+	}
+
+	protected function moveArticle($data) {
+		$model = $this->context->getService('articleModel');
+		$model->moveArticle($data->articleId, $data->menuId, $data->order);
+		return array('articles' => $model->getArticles($data->menuId), 'length' => $model->getLength($data->menuId));
 	}
 }

@@ -15,7 +15,7 @@ class ArticleModel extends BaseModel{
 			JOIN name_has_text nht ON a.name_id=nht.name_id AND language_id=%i
 			JOIN text t ON t.id=nht.text_id
 			WHERE menu_id=%i
-			ORDER BY a.id DESC";
+			ORDER BY a.sort ASC,a.id DESC";
 
 		$rows = $this->db->query($sql, $this->getLanguageId(), $menuId)->fetchAll();
 		foreach($rows as &$row) {
@@ -77,6 +77,23 @@ class ArticleModel extends BaseModel{
 			throw $ex;
 		}
 		$this->db->commit();
+		return $this;
+	}
+
+	public function moveArticle($articleId, $menuId, $order) {
+		$rows = $this->db->query("SELECT id,sort FROM article WHERE menu_id=%i ORDER BY sort ASC,id DESC", $menuId)->fetchAll();
+		foreach($rows as $sort => $row) {
+			$current = $sort;
+			if($articleId == $row->id) {
+				if($order == 'down') {
+					$sort++;
+				} else {
+					$sort--;
+				}
+				$this->db->query("UPDATE article SET sort=%i WHERE id=%i", $current, $rows[$sort]->id);
+			}
+			if($row->sort != $sort) $this->db->query("UPDATE article SET sort=%i WHERE id=%i", $sort, $row->id);
+		}
 		return $this;
 	}
 
