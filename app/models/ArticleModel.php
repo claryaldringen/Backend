@@ -5,6 +5,8 @@ class ArticleModel extends BaseModel{
 	/** @var NameModel */
 	protected $nameModel;
 
+	protected $data = array();
+
 	public function __construct(ConfigurationModel $config, NameModel $nameModel) {
 		parent::__construct($config);
 		$this->nameModel = $nameModel;
@@ -62,16 +64,28 @@ class ArticleModel extends BaseModel{
 	}
 
 	public function getLength($menuId) {
-		$length = $this->db->query("SELECT [length] FROM article_setting WHERE menu_id=?", $menuId)->fetchSingle();
+		$length = $this->loadSetting($menuId)->data[$menuId]['length'];
 		if(empty($length) && $length !== 0) $length = null;
 		return $length;
 	}
 
-	public function setLength($menuId, $length = null) {
+	public function getCount($menuId) {
+		return $this->loadSetting($menuId)->data[$menuId]['count'];
+	}
+
+	private function loadSetting($menuId) {
+		if(empty($this->data[$menuId])) {
+			$row = $this->db->query("SELECT * FROM article_setting WHERE menu_id=?", $menuId)->fetch();
+			$this->data[$menuId] = array('length' => $row->length, 'count' => $row->count);
+		}
+		return $this;
+	}
+
+	public function setSetting($menuId, $length = null, $count = 8) {
 		$this->db->begin();
 		try {
 			$this->db->query("DELETE FROM article_setting WHERE menu_id=?", $menuId);
-			if ($length !== null) $this->db->query("INSERT INTO article_setting", array('menu_id' => $menuId, 'length' => $length));
+			if ($length !== null) $this->db->query("INSERT INTO article_setting", array('menu_id' => $menuId, 'length' => $length, 'count' => $count));
 		} catch(Exception $ex) {
 			$this->db->rollback();
 			throw $ex;

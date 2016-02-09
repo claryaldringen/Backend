@@ -141,7 +141,7 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 
 	protected function loadArticles($data) {
 		$model = $this->context->getService('articleModel');
-		return array('articles' => $model->getArticles($data->pageId), 'length' => $model->getLength($data->pageId));
+		return array('articles' => $model->getArticles($data->menuId), 'length' => $model->getLength($data->menuId), 'count' => $model->getCount($data->menuId));
 	}
 
 	protected function loadArticle($data) {
@@ -149,14 +149,15 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 	}
 
 	protected function saveArticle($data) {
-		$id = $this->context->getService('articleModel')->setArticle($data->menuId, $data->text, $data->articleId);
-		return array('articles' => $this->context->getService('articleModel')->getArticles($data->menuId, $id));
+		$model = $this->context->getService('articleModel');
+		$id = $model->setArticle($data->menuId, $data->text, $data->articleId);
+		return array('articles' => $model->getArticles($data->menuId, $id), 'length' => $model->getLength($data->menuId), 'count' => $model->getCount($data->menuId));
 	}
 
 	protected function removeArticle($data) {
 		$model = $this->context->getService('articleModel');
 		$model->removeArticle($data->articleId);
-		return array('articles' => $model->getArticles($data->menuId), 'length' => $model->getLength($data->menuId));
+		return array('articles' => $model->getArticles($data->menuId), 'length' => $model->getLength($data->menuId), 'count' => $model->getCount($data->menuId));
 	}
 
 	protected function loadTypes() {
@@ -241,13 +242,13 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 		return array('concerts' => $concerts);
 	}
 
-	protected function saveArticleLength($data) {
-		$this->context->getService('articleModel')->setLength($data->menuId, $data->length);
+	protected function saveArticleSetting($data) {
+		$this->context->getService('articleModel')->setSetting($data->menuId, $data->length, $data->count);
 	}
 
 	protected function moveArticle($data) {
 		$model = $this->context->getService('articleModel');
 		$model->moveArticle($data->articleId, $data->menuId, $data->order);
-		return array('articles' => $model->getArticles($data->menuId), 'length' => $model->getLength($data->menuId));
+		return array('articles' => $model->getArticles($data->menuId), 'length' => $model->getLength($data->menuId), 'count' => $model->getCount($data->menuId));
 	}
 }

@@ -4,15 +4,17 @@ class Cms.Articles extends CJS.Component
 	constructor: (id, parent) ->
 		super(id, parent)
 		@scroll = 0
+		@count = 0
 
 	setMenuId: (@menuId) -> @
 
-	load: -> @sendRequest('loadArticles', {pageId: @menuId}, @loadResponse)
+	load: -> @sendRequest('loadArticles', {menuId: @menuId}, @loadResponse)
 
 	loadResponse: (response) ->
 		if not response.error?
 			@articles = response.articles
 			@length = response.length
+			@count = response.count
 			@render()
 		else
 			alert(response.error)
@@ -63,8 +65,11 @@ class Cms.Articles extends CJS.Component
 		if element.hasClass('doChangeShowType')
 			if element.selectedIndex then @length = 1024 else @length = null
 			@render()
-		@length = element.value if element.hasClass('doChangeLength')
-		@sendRequest('saveArticleLength', {menuId: @menuId, length: @length})
+		if element.hasClass('doChangeLength')
+			@length = element.value
+		if element.hasClass('doChangeCount')
+			@count = element.value
+		@sendRequest('saveArticleSetting', {menuId: @menuId, length: @length, count: @count})
 
 	beforeRender: ->
 		@scroll = document.querySelector('.article_container').scrollTop;
@@ -81,8 +86,9 @@ class Cms.Articles extends CJS.Component
 		html += '&nbsp;<select class="form-control input-sm doChangeShowType">'
 		html += '<option value="0">Zobrazovat celé články</option>'
 		html += '<option value="1" ' + (if @length? then 'selected' else '') + '>Zobrazovat pouze náhledy článků</option>'
-		html += '</select>'
-		html += '&nbsp;Délka náhledu: <input type="number" value="' + @length + '" class="form-control input-sm doChangeLength"> znaků' if @length?
+		html += '</select>&nbsp;'
+		html += 'Délka náhledu: <input type="number" value="' + @length + '" min="0" class="form-control input-sm short doChangeLength"> znaků&nbsp;' if @length?
+		html += '&nbsp;<input type="number" value="' + @count + '" min="0" class="form-control input-sm short doChangeCount"> článků na stránku'
 		html += '</div>'
 		html += '<div class="article_container" style="height: ' + (@getHeight() - 82) + 'px">'
 		if @articles?
