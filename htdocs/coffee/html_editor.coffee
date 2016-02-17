@@ -41,5 +41,8 @@ class Cms.HtmlEditor extends CJS.Component
 		@getCodeMirror()
 
 	getHtml: ->
-		html = '<div class="toolbar"><button class="doSave btn btn-primary btn-sm">Uložit</button></div>'
+		#doSave btn btn-primary btn-sm
+		html = '<div class="cke_top cke_reset_all"><div class="cke_toolgroup"><a class="cke_button cke_button__save cke_button_off">'
+		html += '<span class="cke_button_icon cke_button__save_icon doSave" style="background-image:url(\'http://cms.dev/bower_components/ckeditor/plugins/icons.png?t=FB9E\');background-position:0 -1704px;background-size:auto;">&nbsp;</span>'
+		html += '</a></div></div>'
 		html += '<textarea id="' + @getElTextareaId() + '">' + @text + ' </textarea>'
