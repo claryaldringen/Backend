@@ -53,7 +53,7 @@ class CJS.Component
 	sendRequest: (action, params, callback = ->) ->
 		$.post(@getBaseUrl(), {action: action, data: JSON.stringify(params)}, (data) =>
 			data = JSON.parse(data)
-			if data.errorCode? and data.errorCode*1 is 1
+			if data? and data.errorCode? and data.errorCode*1 is 1
 				alert('Při provádění operace došlo k chybě. Kontaktujte prosím administrátora webu.');
 				console.log(data.error)
 			else
