@@ -251,4 +251,21 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 		$model->moveArticle($data->articleId, $data->menuId, $data->order);
 		return array('articles' => $model->getArticles($data->menuId), 'length' => $model->getLength($data->menuId), 'count' => $model->getCount($data->menuId));
 	}
+
+	protected function loadEmails() {
+		$model = $this->context->getService('emailModel');
+		$domain = $model->getDomain();
+		$emails = $model->getEmails();
+		return array('domain' => $domain, 'emails' => $emails);
+	}
+
+	protected function saveEmails($data) {
+		$this->context->getService('emailModel')->setEmails($data);
+		return $this->loadEmails();
+	}
+
+	protected function removeEmail($data) {
+		$this->context->getService('emailModel')->removeEmail($data->id);
+		return $this->loadEmails();
+	}
 }

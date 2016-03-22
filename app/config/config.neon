@@ -25,7 +25,8 @@ services:
 	routerFactory: RouterFactory
 	router: @routerFactory::createRouter
 	db: Dibi\Connection(%database%)
-	configurationModel: ConfigurationModel(@db, %siteId%, %languageId%)
+	dbPostfix: Dibi\Connection(%dbpostfix%)
+	configurationModel: ConfigurationModel(@db, @dbPostfix, %siteId%, %languageId%)
 	library: Library
 	textModel: TextModel(@configurationModel)
 	nameModel: NameModel(@configurationModel, @textModel)
@@ -40,6 +41,7 @@ services:
 	commentModel: CommentModel(@configurationModel, @library)
 	concertModel: ConcertModel(@configurationModel)
 	siteModel: SiteModel(@configurationModel)
+	emailModel: EmailModel(@configurationModel)
 	authenticator: @userModel
 
 tracy:

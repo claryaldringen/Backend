@@ -5,5 +5,11 @@ parameters:
 			password:
 			database: 318_cms
 			profiler: TRUE
-		siteId: 1
+		dbpostfix:
+			host: localhost
+			username: root
+			password:
+			database: postfix
+			profiler: TRUE
+		siteId: 3
 		adminHost: www.simplecms.dev
