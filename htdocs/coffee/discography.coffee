@@ -23,7 +23,7 @@ class Cms.Discography extends CJS.Component
 		@albums = response
 		album.songs = [{name: '', text: '', sortKey: 1}] for album in @albums when album.songs.length is 0
 		date = new Date()
-		@albums.unshift({id: 0, name: '', year: date.getFullYear(), text: '', link: '', price: 0, songs: [{name: '', text: '', link: '', sortKey: 1}]})
+		@albums.unshift({id: 0, name: '', year: date.getFullYear(), text: '', link: '', price: 0, count: 0, songs: [{name: '', text: '', link: '', sortKey: 1}]})
 		@render()
 
 	save: (text) ->
@@ -72,6 +72,8 @@ class Cms.Discography extends CJS.Component
 			@albums[element.dataset.album].link = element.value
 		if element.hasClass('changePrice')
 			@albums[element.dataset.album].price = element.value
+		if element.hasClass('changeCount')
+			@albums[element.dataset.album].count = element.value
 		if element.hasClass('doUploadAudio')
 			@upload(element.files, element.dataset.album, element.dataset.song)
 		if element.hasClass('doUploadImage')
@@ -109,7 +111,7 @@ class Cms.Discography extends CJS.Component
 		@saving[response.index] = null
 		if @albums[0].id isnt 0
 			date = new Date()
-			@albums.unshift({id: 0, name: '', year: date.getFullYear(), text: '', link: '', price: 0, songs: [{name: '', text: '', link: '', sortKey: 1}]})
+			@albums.unshift({id: 0, name: '', year: date.getFullYear(), text: '', link: '', price: 0, count: 0, songs: [{name: '', text: '', link: '', sortKey: 1}]})
 		@render()
 
 	removeResponse: (response) ->
@@ -135,6 +137,7 @@ class Cms.Discography extends CJS.Component
 			html += '<tr><td>Rok vydání:&nbsp;</td><td><input data-album="' + ai + '" class="form-control input-sm changeYear" type="text" value="' + album.year + '"></td></tr>'
 			html += '<tr><td>Odkaz na nákup:&nbsp;</td><td><input data-album="' + ai + '" class="form-control input-sm changeLink" type="url" value="' + album.link + '"></td></tr>'
 			html += '<tr><td>Cena:&nbsp;</td><td><input data-album="' + ai + '" class="form-control input-sm changePrice" type="number" value="' + album.price + '"></td></tr>'
+			html += '<tr><td>Počet kusů:&nbsp;</td><td><input data-album="' + ai + '" class="form-control input-sm changeCount" type="number" value="' + album.count + '"></td></tr>'
 			html += '</table>'
 			html += '<div class="album-image" style="' + (if album.image? then 'background-image: url(\'./images/userimages/large/' + album.image + '.jpg\')' else 'background: #FFF') + '">'
 			html += '<input type="file" accept="image/jpeg" data-album="' + ai + '" class="doUploadImage"></div>'

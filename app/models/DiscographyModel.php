@@ -20,7 +20,7 @@ class DiscographyModel extends BaseModel
 				if(!isset($album->imageId)) $album->imageId = NULL;
 				if(!isset($album->year)) $album->year = date('Y');
 				if (isset($album->id) && $album->id) {
-					$this->db->query("UPDATE [album] SET name_id=%i,image_id=%i,[year]=%i,text_name_id=%i,link=%s,price=%i WHERE id=%i", $nameId, $album->imageId, $album->year,$textNameId, $album->link, $album->price, $album->id);
+					$this->db->query("UPDATE [album] SET name_id=%i,image_id=%i,[year]=%i,text_name_id=%i,link=%s,price=%i,[count]=%i WHERE id=%i", $nameId, $album->imageId, $album->year,$textNameId, $album->link, $album->price, $album->count, $album->id);
 					$id = $album->id;
 				} else {
 					$insert = array(
@@ -30,7 +30,8 @@ class DiscographyModel extends BaseModel
 						'image_id' => $album->imageId,
 						'year' => $album->year,
 						'link' => $album->link,
-						'price' => $album->price
+						'price' => $album->price,
+						'count' => $album->count
 					);
 					$this->db->query("INSERT INTO [album] ", $insert);
 					$id = $this->db->getInsertId();
@@ -69,7 +70,7 @@ class DiscographyModel extends BaseModel
 	}
 
 	public function getDiscography($menuId, $albumId = null) {
-		$sql = "SELECT a.id,a.year,t.text AS name,i.id AS imageId,i.hash AS image,t2.text,a.link,a.price FROM album a
+		$sql = "SELECT a.id,a.year,t.text AS name,i.id AS imageId,i.hash AS image,t2.text,a.link,a.price,a.count FROM album a
 			LEFT JOIN image i ON i.id=a.image_id
 			JOIN name_has_text nht ON nht.name_id=a.name_id AND nht.language_id=%i
 			JOIN text t ON t.id=nht.text_id
