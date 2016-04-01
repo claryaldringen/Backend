@@ -49,6 +49,7 @@ class ArticleModel extends BaseModel{
 				$id = $this->db->getInsertId();
 			}
 			$this->setArticleUrl($text, $menuId, $id, $nameId);
+			$this->moveArticleUp($menuId);
 			$this->nameModel->clear('article');
 		}catch (Exception $ex) {
 			$this->db->rollback();
@@ -133,6 +134,11 @@ class ArticleModel extends BaseModel{
 
 		$row = $this->db->query($sql, $this->getLanguageId(), $menuId, $url, $articleId)->fetchSingle();
 		return empty($row);
+	}
+
+	private function moveArticleUp($menuId) {
+		$this->db->query("UPDATE article SET sort = sort + 1 WHERE menu_id=%i", $menuId);
+		return $this;
 	}
 
 }
