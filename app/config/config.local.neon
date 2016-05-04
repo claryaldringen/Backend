@@ -1,6 +1,6 @@
 parameters:
 		database:
-			host: localhost
+			host: clary
 			username: root
 			password:
 			database: 318_cms
@@ -11,5 +11,6 @@ parameters:
 			password:
 			database: postfix
 			profiler: TRUE
+			lazy: TRUE
 		siteId: 3
 		adminHost: www.simplecms.dev

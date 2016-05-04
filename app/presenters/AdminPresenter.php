@@ -2,6 +2,16 @@
 
 class AdminPresenter extends \Nette\Application\UI\Presenter{
 
+	public function startup()
+	{
+		parent::startup();
+		$parts = explode('.', $this->context->getByType('Nette\Http\Request')->getUrl()->host);
+		unset($parts[0]);
+		$siteId = $this->context->getService('siteModel')->getSiteId(implode('.', $parts));
+		if(empty($siteId)) $siteId = $this->context->parameters['siteId'];
+		$this->getSession('cms')->siteId = $siteId;
+	}
+
 	public function createComponentLoginForm()
 	{
 		$form = new \Nette\Application\UI\Form($this,'loginForm');
@@ -28,15 +38,6 @@ class AdminPresenter extends \Nette\Application\UI\Presenter{
 		if(!$this->getUser()->isLoggedIn()) $this->redirect('login');
 		$session = $this->getSession('cms');
 		if(!isset($session->languageId)) $session->languageId = $this->context->getService('configurationModel')->getLanguageId();
-	}
-
-	public function actionSetSite($siteId) {
-		$session = $this->getSession('cms');
-		if($session->siteId != $siteId) {
-			$session->siteId = $siteId;
-			$this->user->logout(true);
-		}
-		$this->redirect('default');
 	}
 
 	public function actionImageBrowser() {
