@@ -7,7 +7,7 @@ require dirname(__FILE__) . '/../../Library/vendor/autoload.php';
 $configurator = new \Nette\Configurator();
 
 // Enable Nette Debugger for error visualisation & logging
-//$configurator->setDebugMode(TRUE);
+$configurator->setDebugMode(TRUE);
 $configurator->enableDebugger(dirname(__FILE__) . '/../log');
 
 // Enable RobotLoader - this will load all classes automatically

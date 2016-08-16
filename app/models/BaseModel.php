@@ -1,7 +1,5 @@
 <?php
 
-use Nette;
-
 class BaseModel extends Nette\Object{
 
 	/** @var Dibi\Connection */
