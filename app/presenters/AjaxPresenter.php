@@ -11,8 +11,7 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 	public function renderDefault() {
 		\Tracy\Debugger::enable(\Tracy\Debugger::PRODUCTION);
 		$session = $this->getSession('cms');
-		$this->context->getService('menuModel')->setSiteId($session->siteId);
-		$this->context->getService('configurationModel')->setLanguageId($session->languageId);
+		$this->context->getService('configurationModel')->setLanguageId($session->languageId)->setSiteId($session->siteId);
 		$post = $this->request->post;
 		try {
 			$this->template->response = $this->{$post['action']}(json_decode($post['data']));

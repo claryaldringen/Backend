@@ -77,7 +77,7 @@ class ArticleModel extends BaseModel{
 	private function loadSetting($menuId) {
 		if(empty($this->data[$menuId])) {
 			$row = $this->db->query("SELECT * FROM article_setting WHERE menu_id=?", $menuId)->fetch();
-			$this->data[$menuId] = array('length' => $row->length, 'count' => $row->count);
+			if(!empty($row)) $this->data[$menuId] = array('length' => $row->length, 'count' => $row->count);
 		}
 		return $this;
 	}

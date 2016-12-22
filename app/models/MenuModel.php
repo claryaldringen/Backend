@@ -21,13 +21,7 @@ class MenuModel extends BaseModel{
 	public function __construct(ConfigurationModel $config, NameModel $nameModel, Library $library) {
 		parent::__construct($config);
 		$this->nameModel = $nameModel;
-		$this->siteId = $config->getSiteId();
 		$this->library = $library;
-	}
-
-	public function setSiteId($siteId) {
-		$this->siteId = $siteId;
-		return $this;
 	}
 
 	public function getMenu($type = 'visible') {
@@ -38,7 +32,7 @@ class MenuModel extends BaseModel{
 			WHERE site_id=%i AND m.visibility = %s
 			ORDER BY [sort],[id]";
 
-			$rows = $this->db->query($sql, $this->getLanguageId(), $this->siteId, $type)->fetchAll();
+			$rows = $this->db->query($sql, $this->getLanguageId(), $this->config->getSiteId(), $type)->fetchAll();
 			foreach($rows as &$row) $row['menu_id'] = (int)$row['menu_id'];
 			if($type == 'visible') {
 				array_unshift($rows, new DibiRow(array('id' => 0, 'menu_id' => null)));
@@ -72,7 +66,7 @@ class MenuModel extends BaseModel{
 				if(isset($item->id)) {
 					$this->db->query("UPDATE [menu] SET name_id=%i,sort=%i WHERE id=%i", $nameId, $sort, $item->id);
 				} else {
-					$this->db->query("INSERT INTO [menu]", array('menu_id' => $parentId, 'name_id' => $nameId, 'site_id' => $this->siteId, 'sort' => $sort, 'visibility' => $item->visibility));
+					$this->db->query("INSERT INTO [menu]", array('menu_id' => $parentId, 'name_id' => $nameId, 'site_id' => $this->config->getSiteId(), 'sort' => $sort, 'visibility' => $item->visibility));
 				}
 			} elseif(isset($item->id)) {
 				$this->db->query("DELETE FROM [menu] WHERE id=%i", $item->id);
@@ -87,11 +81,11 @@ class MenuModel extends BaseModel{
 	}
 
 	public function getIdOfGeneralGallery() {
-		return $this->db->query("SELECT id FROM menu WHERE visibility='invisible' AND name_id IS NULL AND site_id=%i", $this->siteId)->fetchSingle();
+		return $this->db->query("SELECT id FROM menu WHERE visibility='invisible' AND name_id IS NULL AND site_id=%i", $this->config->getSiteId())->fetchSingle();
 	}
 
 	public function addContainer($menuId) {
-		$this->db->query("INSERT INTO menu", array('site_id' => $this->siteId, 'menu_id' => $menuId, 'visibility' => 'invisible'));
+		$this->db->query("INSERT INTO menu", array('site_id' => $this->config->getSiteId(), 'menu_id' => $menuId, 'visibility' => 'invisible'));
 		return $this->db->getInsertId();
 	}
 

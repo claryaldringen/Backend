@@ -21,11 +21,19 @@ class ConfigurationModel{
 	 * @param int $siteId
 	 * @param int $languageId
 	 */
-	public function __construct(\Dibi\Connection $db, \Dibi\Connection $dbPostfix, $siteId, $languageId) {
+	public function __construct(\Dibi\Connection $db, \Dibi\Connection $dbPostfix, $languageId) {
 		$this->db = $db;
 		$this->dbPostfix = $dbPostfix;
-		$this->siteId = $siteId;
 		$this->languageId = $languageId;
+	}
+
+	/**
+	 * @param int $siteId
+	 * @return $this
+	 */
+	public function setSiteId($siteId) {
+		$this->siteId = $siteId;
+		return $this;
 	}
 
 	/**

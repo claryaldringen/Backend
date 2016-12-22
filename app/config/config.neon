@@ -26,7 +26,7 @@ services:
 	router: @routerFactory::createRouter
 	db: Dibi\Connection(%database%)
 	dbPostfix: Dibi\Connection(%dbpostfix%)
-	configurationModel: ConfigurationModel(@db, @dbPostfix, %siteId%, %languageId%)
+	configurationModel: ConfigurationModel(@db, @dbPostfix, %languageId%)
 	library: Library
 	textModel: TextModel(@configurationModel)
 	nameModel: NameModel(@configurationModel, @textModel)

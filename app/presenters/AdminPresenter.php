@@ -41,13 +41,13 @@ class AdminPresenter extends \Nette\Application\UI\Presenter{
 	}
 
 	public function actionImageBrowser() {
-		$this->context->getService('menuModel')->setSiteId($this->getSession('cms')->siteId);
+		$this->context->getService('configurationModel')->setSiteId($this->getSession('cms')->siteId);
 		$this->template->title = $this->context->getService('siteModel')->getSiteName($this->getSession('cms')->siteId);
 		$this->template->generallGalleryId = $this->context->getService('menuModel')->getIdOfGeneralGallery();
 	}
 
 	public function actionFileBrowser() {
-		$this->context->getService('menuModel')->setSiteId($this->getSession('cms')->siteId);
+		$this->context->getService('configurationModel')->setSiteId($this->getSession('cms')->siteId);
 		$this->template->title = $this->context->getService('siteModel')->getSiteName($this->getSession('cms')->siteId);
 		$this->template->generallGalleryId = $this->context->getService('menuModel')->getIdOfGeneralGallery();
 	}
