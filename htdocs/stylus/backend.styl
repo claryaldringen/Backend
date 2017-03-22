@@ -1,0 +1,375 @@
+
+html
+	font-family Arial
+
+	body
+		margin 0px
+		display table
+		height 100%
+		width 100%
+
+		#menuContainer
+			width 260px
+			display table-cell
+			height 100%
+			overflow auto
+			border-right solid 1px #AAA
+
+			.toolbar
+				padding 5px 0px 5px 0px
+				background linear-gradient(to bottom,#fff 0,#e0e0e0 100%)
+				border-bottom solid 1px #CCC
+
+			.tab
+				position relative
+				bottom  -6px
+				display inline-block
+				border solid 1px #CCC
+				padding 3px 10px 5px 10px
+				margin 0px 3px 0px 3px
+				border-top-left-radius 3px
+				border-top-right-radius 3px
+				cursor pointer
+				background #FFF
+
+			.active
+				background #CCC
+				cursor default
+
+			#menuContainer_menu
+			#menuContainer_float
+
+				.toolbar
+					background #CCC
+					text-align center
+
+				img
+					cursor pointer
+
+				ul
+					margin-top 5px
+					list-style-type none
+					padding-left 20px
+
+					input
+						display inline-block
+
+					a
+						color #000
+						text-decoration none
+
+						&:hover
+							color: #555
+
+					span.selected
+						color #555
+						font-weight bold
+
+			#menuContainer_menu
+				input
+					width 70%
+
+			#menuContainer_float
+
+				li
+					margin 10px 0px 10px 0px
+
+				input
+					width 90%
+
+				.name
+					border-bottom-left-radius 0
+					border-bottom-right-radius 0
+
+				.url
+					border-top-left-radius 0
+					border-top-right-radius 0
+
+		#content
+			height 100%
+
+			.toolbar
+				padding 5px 5px 0px 5px
+				background linear-gradient(to bottom,#fff 0,#e0e0e0 100%)
+				border-bottom solid 1px #CCC
+
+				.main_toolbar
+					float right
+
+				label
+					margin 0px 0px 5px 0px
+					font-weight normal
+
+				.tab
+					position relative
+					bottom  -6px
+					display inline-block
+					border solid 1px #CCC
+					padding 3px 10px 5px 10px
+					margin 0px 3px 0px 3px
+					border-top-left-radius 3px
+					border-top-right-radius 3px
+					cursor pointer
+					background #FFF
+
+				.active
+					background #CCC
+					cursor default
+
+			#content_texthtml
+			#content_galleryhtml
+
+				.toolbar
+					background #CCC
+					padding 5px
+
+		#content_gallerygallery
+		#gallery
+			background #FFFFFF
+
+			.toolbar
+				background #CCC
+				padding 5px
+
+				.share_control
+					padding 1px 3px
+					min-width 120px
+					cursor pointer
+					border solid 1px #CCC
+					background #FFFFFF
+					z-index 3
+
+					td
+						font-size 12px
+						padding 2px
+
+				.doUpload
+					background-image url('/images/cms/progress.png')
+					background-repeat no-repeat
+					background-size 0 100%
+
+			.folder
+				position relative
+				width 128px
+				float left
+				margin 10px
+				cursor pointer
+				text-align center
+				font-size 12px
+
+				.doDelete
+					position absolute
+					right 5px
+					top 5px
+
+				div
+					width 128px
+					height 128px
+					display table-cell
+					vertical-align middle
+					text-align center
+					border solid 1px #CCC
+
+					img
+						border solid 1px #CCC
+
+				input
+					width 128px
+					text-align center
+					background none
+					border solid 1px #fff
+
+				.focused
+					border solid 1px #000000
+
+		#content_text
+		#content_gallerygallery
+			height 90%
+
+
+			.CodeMirror
+				border 1px solid #EEE
+				height auto
+
+		#content_settings
+			table
+				tr
+					td
+						padding 10px
+
+						.error
+							font-size 12
+							color #F00
+
+	.articles,.containers
+
+		.article
+			padding 10px
+			margin 10px;
+			border-radius 5px
+			border solid 1px #CCC
+
+		.toolbar
+			background #CCC !important
+			text-align left
+			padding 5px !important
+
+		.article_container
+			overflow auto
+
+	.discography
+		overflow auto
+
+		label
+			font-weight normal
+
+		input
+			display inline
+			width auto
+
+		.left
+			float left
+			text-align center
+			margin 10px
+			width 360px
+
+			label
+				width 100%
+
+			div
+				border solid 1px #CCC
+				background #FFF
+				width 80%
+				height 70%
+				margin auto
+				margin-top 1%
+				margin-bottom 1%
+
+			.album-image
+				width 250px
+				height 250px
+				padding 10px
+				background-repeat no-repeat
+				background-size 100% 100%
+
+		.right
+			overflow auto
+			height 360px
+			margin 10px
+
+			table
+				text-align center
+
+				td
+					padding 2px 0px 2px 0px
+
+				td.number
+					width 6%
+
+				th
+					text-align center
+					font-size 90%
+
+			input
+				width 100%
+
+			.file
+				display inline
+				width auto
+
+		.album
+			margin 10px
+			border-radius 5px
+			border solid 1px #CCC
+			background #EEE
+			padding 5px
+			height 480px
+
+	.cms-container
+		width 98%
+		height 600px
+		border solid 1px #CCC
+		margin 1%
+		border-radius 10px
+		overflow-x hidden
+
+	.container-toolbar
+		width 100%
+		padding 5px 5px 0px 5px
+		background linear-gradient(to bottom,#fff 0,#e0e0e0 100%)
+		border-bottom solid 1px #CCC
+
+		.tab
+			position relative
+			bottom  -6px
+			display inline-block
+			border solid 1px #CCC
+			padding 3px 10px 5px 10px
+			margin 0px 3px 0px 3px
+			border-top-left-radius 3px
+			border-top-right-radius 3px
+			cursor pointer
+			background #FFF
+
+		.active
+			background #CCC
+			cursor default
+
+	.right-float
+		float right
+
+	div.comment
+		border solid 1px #CCC
+		border-radius 5px
+		padding 10px
+		margin 5px
+
+	.comments-container
+		overflow auto
+
+		ul
+			list-style-type none
+
+		td
+			padding 5px
+
+		.comment-form
+			width 100%
+			max-width 500px
+			background #DDD
+			border solid 1px #CCC
+			border-radius 5px
+			padding 10px
+			margin 5px
+
+			table
+				width 100%
+
+			textarea
+				height 6em
+
+	.center
+		text-align center
+
+	.concerts
+		overflow auto
+
+	.concert
+		padding 5px
+		margin 10px
+		border-radius 5px
+		border solid 1px #CCC
+		background #EEE
+		height 450px
+
+	.concert-image
+		width 200px
+		height 200px
+		padding 20px
+		border solid 1px #CCC
+		margin 5px
+		background-repeat no-repeat
+		background-size 100% 100%
+
+	.short
+		width 64px !important

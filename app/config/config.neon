@@ -13,12 +13,12 @@ php:
 	date.timezone: Europe/Prague
 	# zlib.output_compression: yes
 
-nette:
-	application:
-		errorPresenter: Error
 
-	session:
-		expiration: 14 days
+application:
+	errorPresenter: Error
+
+session:
+	expiration: 14 days
 
 
 services:

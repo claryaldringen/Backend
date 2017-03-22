@@ -1,6 +1,6 @@
 parameters:
 		database:
-			host: clary
+			host: localhost
 			username: root
 			password:
 			database: 318_cms
