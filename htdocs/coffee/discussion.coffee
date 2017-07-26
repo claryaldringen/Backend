@@ -1,5 +1,7 @@
 
-class Cms.Discussion extends CJS.Component
+Component = require './ComponentJS/component'
+
+class Discussion extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -99,3 +101,4 @@ class Cms.Discussion extends CJS.Component
 		html += @getFormHtml() if not @comment.comment_id? or @comment.comment_id is 0
 		html += '</div>'
 
+module.exports = Discussion

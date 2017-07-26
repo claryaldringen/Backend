@@ -1,5 +1,8 @@
 
-class Cms.Concerts extends CJS.Component
+Component = require './ComponentJS/component'
+Concert = require './concert'
+
+class Concerts extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -18,7 +21,7 @@ class Cms.Concerts extends CJS.Component
 		id = @id + '_' + concert.id
 		child = @getChildById(id)
 		if not child?
-			child = new Cms.Concert(id, @)
+			child = new Concert(id, @)
 		child.setConcert(concert)
 
 	getHtml: ->
@@ -27,3 +30,5 @@ class Cms.Concerts extends CJS.Component
 			child = @getConcert(concert)
 			html += '<div id="' + child.getId() + '">' + child.getHtml() + '</div>'
 		html += '</div>'
+
+module.exports = Concerts

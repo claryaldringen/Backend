@@ -1,5 +1,7 @@
 
-class Cms.FloatPages extends CJS.Component
+Component = require './ComponentJS/component'
+
+class FloatPages extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -82,4 +84,4 @@ class Cms.FloatPages extends CJS.Component
 		html += @renderItem(item, index) for item, index in @items
 		html += '</ul>'
 
-
+module.exports = FloatPages

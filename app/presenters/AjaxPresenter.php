@@ -9,7 +9,7 @@
 class AjaxPresenter extends \Nette\Application\UI\Presenter{
 
 	public function renderDefault() {
-		\Tracy\Debugger::enable(\Tracy\Debugger::PRODUCTION);
+		// \Tracy\Debugger::enable(\Tracy\Debugger::PRODUCTION);
 		$session = $this->getSession('cms');
 		$this->context->getService('configurationModel')->setLanguageId($session->languageId)->setSiteId($session->siteId);
 		$post = $this->request->post;
@@ -266,5 +266,25 @@ class AjaxPresenter extends \Nette\Application\UI\Presenter{
 	protected function removeEmail($data) {
 		$this->context->getService('emailModel')->removeEmail($data->id);
 		return $this->loadEmails();
+	}
+
+	protected function loadSites() {
+		return $this->context->getService("siteModel")->getSites();
+	}
+
+	protected function setSite($data) {
+		$this->getSession('cms')->siteId = $data->id;
+		$this->context->getService('configurationModel')->setSiteId($data->id);
+		return true;
+	}
+
+	protected function loadArticleCategories() {
+		return $this->context->getService('menuModel')->getMenuItemsByType(3);
+	}
+
+	protected function setArticleCategory($data) {
+		$model = $this->context->getService('articleModel');
+		$model->setArticleCategory($data->articleId, $data->newMenuId);
+		return array('articles' => $model->getArticles($data->menuId), 'length' => $model->getLength($data->menuId), 'count' => $model->getCount($data->menuId));
 	}
 }

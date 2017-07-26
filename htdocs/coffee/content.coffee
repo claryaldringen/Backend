@@ -1,5 +1,17 @@
 
-class Cms.Content extends CJS.Component
+Component = require './ComponentJS/component'
+Toolbar = require './toolbar'
+Gallery = require './gallery'
+Settings = require './settings'
+HtmlEditor = require './html_editor'
+WysiwygEditor = require './wysiwyg_editor'
+Articles = require './articles'
+Discography = require './discography'
+Containers = require './containers'
+Discussion = require './discussion'
+Concerts = require './concerts'
+
+class Content extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -13,7 +25,7 @@ class Cms.Content extends CJS.Component
 
 	setType: (typeId = 1) ->
 		@typeId = typeId*1
-		defaultTabs = {1: 'wysiwyg', 2: 'gallery', 3: '', 4: '',5: '', 6: ''}
+		defaultTabs = {1: 'wysiwyg', 2: 'gallery', 3: '', 4: '',5: '', 6: '', 7: ''}
 		@tab = defaultTabs[@typeId]
 		@
 
@@ -21,7 +33,7 @@ class Cms.Content extends CJS.Component
 		id = @id + '_toolbar'
 		toolbar = @getChildById(id)
 		if not toolbar?
-			toolbar = new Cms.Toolbar(id, @)
+			toolbar = new Toolbar(id, @)
 			toolbar.getEvent('languageChange').subscribe(@, @languageChange)
 			toolbar.load()
 		toolbar
@@ -32,7 +44,7 @@ class Cms.Content extends CJS.Component
 		id = @id + '_gallerygallery'
 		component = @getChildById(id)
 		if not component?
-			component = new Cms.Gallery(id, @)
+			component = new Gallery(id, @)
 			component.setMenuId(@menuId)
 		component
 
@@ -41,38 +53,37 @@ class Cms.Content extends CJS.Component
 		id = @id + '_' + @tab if @tab is 'settings'
 		component = @getChildById(id)
 		if not component?
+			return new Settings(id, @) if @tab is 'settings'
 			switch @typeId
 				when 1
 					switch @tab
-						when 'html' then component = new Cms.HtmlEditor(id, @)
-						when 'wysiwyg' then component = new Cms.WysiwygEditor(id, @)
+						when 'html' then component = new HtmlEditor(id, @)
+						when 'wysiwyg' then component = new WysiwygEditor(id, @)
 					component?.getEvent('change').subscribe(@, @textChange)
 				when 2
 					switch @tab
 						when 'gallery' then component = @getGallery()
 						when 'html'
-							component = new Cms.HtmlEditor(id, @)
+							component = new HtmlEditor(id, @)
 							component?.getEvent('change').subscribe(@, @textChange)
 						when 'wysiwyg'
-							component = new Cms.WysiwygEditor(id, @)
+							component = new WysiwygEditor(id, @)
 							component?.getEvent('change').subscribe(@, @textChange)
 				when 3
-					component = new Cms.Articles(id, @)
+					component = new Articles(id, @)
 					component.setMenuId(@menuId).load()
 				when 4
-					component = new Cms.Discography(id, @)
+					component = new Discography(id, @)
 					component.setMenuId(@menuId).load()
 				when 5
-					component = new Cms.Containers(id, @)
+					component = new Containers(id, @)
 					component.setMenuId(@menuId).setTypes(@types).load()
 				when 6
-					component = new Cms.Discussion(id, @)
+					component = new Discussion(id, @)
 					component.setMenuId(@menuId).load()
 				when 7
-					component = new Cms.Concerts(id, @)
+					component = new Concerts(id, @)
 					component.setMenuId(@menuId).load()
-
-			component = new Cms.Settings(id, @) if not component? and @tab is 'settings'
 		component
 
 	textChange: (text) ->
@@ -95,7 +106,10 @@ class Cms.Content extends CJS.Component
 				html += '<div class="tab doChangeTab ' + (if @tab is 'gallery' then 'active' else '') + '" data-tab="gallery">Galerie</div>'
 				html += '<div class="tab doChangeTab ' + (if @tab is 'wysiwyg' then 'active' else '') + '" data-tab="wysiwyg">WYSIWYG</div>'
 				html += '<div class="tab doChangeTab ' + (if @tab is 'html' then 'active' else '') + '" data-tab="html">HTML</div>'
+			else
+				html += '<div class="tab doChangeTab ' + (if @tab is '' then 'active' else '') + '" data-tab="">Obsah</div>'
 		html += '<div class="tab doShowSettings ' + (if @tab is 'settings' then 'active' else '') + '" data-tab="settings">Nastavení</div>'
+		html
 
 	load: ->
 		switch @typeId
@@ -157,3 +171,5 @@ class Cms.Content extends CJS.Component
 		html += '</div>'
 		html += '<div id="' + content.getId() + '">' + content.getHtml() + '</div>' if content?
 		html
+
+module.exports = Content

@@ -1,5 +1,7 @@
 
-class Cms.Menu extends CJS.Component
+Component = require './ComponentJS/component'
+
+class Menu extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -68,7 +70,8 @@ class Cms.Menu extends CJS.Component
 		else if item.items?
 			for childItem,itemIndex in item.items
 				index[level] = itemIndex
-				way = @findItem(elId, callback, childItem, index, level+1)
+				clone = index.slice(0);
+				way = @findItem(elId, callback, childItem, clone, level+1)
 				return way if way?
 		null
 
@@ -144,7 +147,8 @@ class Cms.Menu extends CJS.Component
 			html += '<ul>'
 			for child, childIndex in item.items
 				index[level] = childIndex
-				html += @renderItem(child, index, level+1)
+				clone = index.slice(0);
+				html += @renderItem(child, clone, level+1)
 			html += '</ul>'
 		else if @isWritable
 			html += '<img src="/images/cms/icons/add.png" title="Přidat podmenu" class="doSubmenu" id="' + @getElPlusId(index) + '">'
@@ -162,4 +166,4 @@ class Cms.Menu extends CJS.Component
 		html += @renderItem(item, [index], 1) for item, index in @items
 		html += '</ul>'
 
-
+module.exports = Menu

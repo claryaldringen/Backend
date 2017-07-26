@@ -1,5 +1,11 @@
 
-class Cms.Toolbar extends CJS.Component
+React = require 'react'
+ReactDOM = require 'react-dom'
+
+Component = require './ComponentJS/component'
+SiteSelect = require '../jsx/components/site_select'
+
+class Toolbar extends Component
 
 	click: (element) ->
 		if element.hasClass('doLogout')
@@ -21,7 +27,8 @@ class Cms.Toolbar extends CJS.Component
 			@getEvent('languageChange').fire(element.value)
 
 	getHtml: ->
-		html = '<label>Jazyk:&nbsp;'
+		html = '<div id="site-select" style="display: inline-block;height: 36px;"></div>'
+		html += '<label>Jazyk:&nbsp;'
 		html += '</label><select class="form-control input-sm doChangeLanguage">'
 		if @languages?
 			html += '<option value="' + language.id + '" ' + (if language.id is @selectedLanguage*1 then 'selected' else '') + '>' + language.name + '</option>' for language in @languages
@@ -29,3 +36,9 @@ class Cms.Toolbar extends CJS.Component
 			html += '<option>Loading...</option>'
 		html += '</select></label>&nbsp;&nbsp;'
 		html += '<button class="btn btn-primary btn-sm doLogout">Odhlásit se</button>'
+
+	renderFinish: ->
+		super()
+		ReactDOM.render(React.createElement(SiteSelect),document.getElementById('site-select'))
+
+module.exports = Toolbar

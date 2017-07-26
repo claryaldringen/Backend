@@ -1,5 +1,8 @@
 
-class Cms.Concert extends CJS.Component
+Component = require './ComponentJS/component'
+WysiwygEditor = require './wysiwyg_editor'
+
+class Concert extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -16,7 +19,7 @@ class Cms.Concert extends CJS.Component
 		id = @id + '_wysiwyg'
 		child = @getChildById(id)
 		if not child?
-			child = new Cms.WysiwygEditor(id, @)
+			child = new WysiwygEditor(id, @)
 			child.setType('mini').getEvent('change').subscribe(@, @changeText)
 		child.setContent(@concert.text)
 
@@ -90,3 +93,5 @@ class Cms.Concert extends CJS.Component
 			html += '<button class="btn btn-primary btn-sm doSave">Uložit</button>'
 		html += '</td></tr>'
 		html += '</table><div style="clear: both;"></div></div>'
+
+module.exports = Concert

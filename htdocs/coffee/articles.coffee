@@ -1,5 +1,8 @@
 
-class Cms.Articles extends CJS.Component
+Component = require './ComponentJS/component'
+WysiwygEditor = require './wysiwyg_editor'
+
+class Articles extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -15,6 +18,15 @@ class Cms.Articles extends CJS.Component
 			@articles = response.articles
 			@length = response.length
 			@count = response.count
+			@loadCategories()
+		else
+			alert(response.error)
+
+	loadCategories: -> @sendRequest('loadArticleCategories', {}, @loadCategoriesResponse)
+
+	loadCategoriesResponse: (response) ->
+		if not response.error?
+			@categories = response
 			@render()
 		else
 			alert(response.error)
@@ -22,8 +34,16 @@ class Cms.Articles extends CJS.Component
 	getWysiwyg: (index) ->
 		id = @id + '_wysiwyg'
 		child = @getChildById(id)
-		child = new Cms.WysiwygEditor(id, @) if not child?
+		child = new WysiwygEditor(id, @) if not child?
 		child.setContent(@articles[index].html)
+
+	parseArticle: (html) ->
+		parts = html.split '</h'
+		heading = parts.shift().substr 4
+		body = parts.join('</h').substr 2
+		tmp = document.createElement 'DIV'
+		tmp.innerHTML = body
+		return {heading: heading, body: tmp.textContent || tmp.innerText || ""}
 
 	save: (data) ->
 		articleId = if @articles[@opened].id? then @articles[@opened].id else null
@@ -64,12 +84,18 @@ class Cms.Articles extends CJS.Component
 	change: (element) ->
 		if element.hasClass('doChangeShowType')
 			if element.selectedIndex then @length = 1024 else @length = null
+			@sendRequest('saveArticleSetting', {menuId: @menuId, length: @length, count: @count})
 			@render()
 		if element.hasClass('doChangeLength')
 			@length = element.value
+			@sendRequest('saveArticleSetting', {menuId: @menuId, length: @length, count: @count})
 		if element.hasClass('doChangeCount')
 			@count = element.value
-		@sendRequest('saveArticleSetting', {menuId: @menuId, length: @length, count: @count})
+			@sendRequest('saveArticleSetting', {menuId: @menuId, length: @length, count: @count})
+		if element.hasClass('doChangeCategory')
+			parts = element.options[element.selectedIndex].value.split '_'
+			@sendRequest('setArticleCategory', {articleId: parts[0], newMenuId: parts[1], menuId: @menuId}, @loadResponse)
+
 
 	beforeRender: ->
 		@scroll = document.querySelector('.article_container').scrollTop;
@@ -97,12 +123,26 @@ class Cms.Articles extends CJS.Component
 					wysiwyg = @getWysiwyg(index)
 					html += '<div id="' + wysiwyg.getId() + '">' + wysiwyg.getHtml() + '</div>'
 				else
-					html += '<div class="article">' + article.html.substring(0,1024)
-					html += '&nbsp;&nbsp;&nbsp;<button class="btn btn-sm btn-primary doEdit" data-index="' + index + '">Editovat</button>&nbsp;&nbsp;&nbsp;'
+					parsed = @parseArticle article.html
+					html += '<div class="article panel panel-default">'
+					html += '<div class="panel-heading">'
+					html += '<div class="right">'
+					html += '<button class="btn btn-sm btn-primary doEdit" data-index="' + index + '">Editovat</button>&nbsp;&nbsp;&nbsp;'
 					html += '<button class="btn btn-sm btn-danger doRemove" data-index="' + index + '">Smazat</button>&nbsp;&nbsp;&nbsp;'
 					html += '<button class="btn btn-sm btn-default doMoveDown" data-index="' + index + '">Posunout dolů</button>&nbsp;&nbsp;&nbsp;' if article.id? and index isnt @articles.length-1
-					html += '<button class="btn btn-sm btn-default doMoveUp" data-index="' + index + '">Posunout nahoru</button>' if article.id? and index > 0
+					html += '<button class="btn btn-sm btn-default doMoveUp" data-index="' + index + '">Posunout nahoru</button>&nbsp;&nbsp;&nbsp;' if article.id? and index > 0
+					html += '<select class="form-control input-sm doChangeCategory" style="display: inline; width:250">'
+					for id,category of @categories
+						selected = if id*1 == @menuId*1 then 'selected' else ''
+						html += '<option value="' + article.id + '_' + id + '" ' + selected + '>' + category + '</option>'
+					html += '</select>'
+					html += '</div>'
+					html += '<h4>' + parsed.heading + '</h4>'
+					html += '</div>'
+					html += '<div class="panel-body">' + parsed.body.substring(0,1024) + '</div>'
 					html += '</div>'
 		else
 			html += 'Loading...'
 		html += '</div></div>'
+
+module.exports = Articles

@@ -7,9 +7,11 @@ class AdminPresenter extends \Nette\Application\UI\Presenter{
 		parent::startup();
 		$parts = explode('.', $this->context->getByType('Nette\Http\Request')->getUrl()->host);
 		unset($parts[0]);
-		$siteId = $this->context->getService('siteModel')->getSiteId(implode('.', $parts));
-		if(empty($siteId)) $siteId = $this->context->parameters['siteId'];
-		$this->getSession('cms')->siteId = $siteId;
+		if(empty($this->getSession('cms')->siteId)) {
+			$siteId = $this->context->getService('siteModel')->getSiteId(implode('.', $parts));
+			if (empty($siteId)) $siteId = $this->context->parameters['siteId'];
+			$this->getSession('cms')->siteId = $siteId;
+		}
 	}
 
 	public function createComponentLoginForm()

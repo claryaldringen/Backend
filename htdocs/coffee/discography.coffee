@@ -1,5 +1,8 @@
 
-class Cms.Discography extends CJS.Component
+Component = require './ComponentJS/component'
+WysiwygEditor = require './wysiwyg_editor'
+
+class Discography extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -13,7 +16,7 @@ class Cms.Discography extends CJS.Component
 	getWysiwyg:  ->
 		id = @id + '_wysiwyg'
 		child = @getChildById(id)
-		child = new Cms.WysiwygEditor(id, @) if not child?
+		child = new WysiwygEditor(id, @) if not child?
 		content = if @song? then @albums[@album].songs[@song].text else @albums[@album].text
 		child.setContent(content)
 
@@ -178,3 +181,5 @@ class Cms.Discography extends CJS.Component
 			html += '<div style="clear: both;"></div>'
 			html += '</div>'
 		html += '</div>'
+
+module.exports = Discography

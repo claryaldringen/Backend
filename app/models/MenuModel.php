@@ -98,4 +98,13 @@ class MenuModel extends BaseModel{
 		return $this;
 	}
 
+	public function getMenuItemsByType($typeId) {
+		$sql = "SELECT m.id,text FROM menu m
+			JOIN name_has_text nht ON nht.name_id=m.name_id AND language_id=?
+			JOIN text t ON t.id=nht.text_id
+			WHERE site_id=? AND m.type_id=?";
+
+		return $this->db->query($sql, $this->getLanguageId(), $this->config->getSiteId(), $typeId)->fetchPairs();
+	}
+
 }

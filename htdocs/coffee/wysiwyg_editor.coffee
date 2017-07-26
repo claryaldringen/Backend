@@ -1,5 +1,7 @@
 
-class Cms.WysiwygEditor extends CJS.Component
+Component = require './ComponentJS/component'
+
+class WysiwygEditor extends Component
 
 	constructor: (id, parent) ->
 		super(id,parent)
@@ -52,3 +54,5 @@ class Cms.WysiwygEditor extends CJS.Component
 			, 100
 
 	getHtml: -> '<form><textarea id="' + @getElTextAreaId() + '" name="' + @getElTextAreaId() + '">' + @text + '</textarea></form>'
+
+	module.exports = WysiwygEditor

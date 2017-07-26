@@ -1,5 +1,7 @@
 
-class Cms.Container extends Cms.Content
+Content = require './content'
+
+class Container extends Content
 
 	setTypes: (@types) -> @
 
@@ -35,3 +37,5 @@ class Cms.Container extends Cms.Content
 		html += '</div>'
 		html += '<div id="' + content.getId() + '">' + content.getHtml() + '</div>' if content?
 		html
+
+module.exports = Container

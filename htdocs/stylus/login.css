@@ -1,0 +1,32 @@
+body {
+  padding-top: 5%;
+}
+body table {
+  width: 100%;
+}
+body table td {
+  padding: 5px;
+}
+body table th {
+  text-align: left;
+}
+body table th label {
+  font-weight: normal;
+}
+body table input {
+  display: block;
+  width: 100%;
+  height: 34px;
+  font-size: 14px;
+  color: #555;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  padding: 6px 12px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+body table input.button {
+  background: linear-gradient(to bottom, #fff 0, #e0e0e0 100%);
+  width: 50%;
+}

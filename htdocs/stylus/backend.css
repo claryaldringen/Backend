@@ -1,0 +1,384 @@
+html {
+  font-family: Arial;
+}
+html body {
+  margin: 0px;
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.right{
+  float: right;
+}
+
+html body #menuContainer {
+  width: 260px;
+  display: table-cell;
+  height: 100%;
+  overflow: auto;
+  border-right: solid 1px #aaa;
+}
+html body #menuContainer .toolbar {
+  padding: 5px 0px 5px 0px;
+  background: linear-gradient(to bottom, #fff 0, #e0e0e0 100%);
+  border-bottom: solid 1px #ccc;
+}
+html body #menuContainer .tab {
+  position: relative;
+  bottom: -6px;
+  display: inline-block;
+  border: solid 1px #ccc;
+  padding: 3px 10px 5px 10px;
+  margin: 0px 3px 0px 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  cursor: pointer;
+  background: #fff;
+}
+html body #menuContainer .active {
+  background: #ccc;
+  cursor: default;
+}
+html body #menuContainer #menuContainer_menu .toolbar,
+html body #menuContainer #menuContainer_float .toolbar {
+  background: #ccc;
+  text-align: center;
+}
+html body #menuContainer #menuContainer_menu img,
+html body #menuContainer #menuContainer_float img {
+  cursor: pointer;
+}
+html body #menuContainer #menuContainer_menu ul,
+html body #menuContainer #menuContainer_float ul {
+  margin-top: 5px;
+  list-style-type: none;
+  padding-left: 20px;
+}
+html body #menuContainer #menuContainer_menu ul input,
+html body #menuContainer #menuContainer_float ul input {
+  display: inline-block;
+}
+html body #menuContainer #menuContainer_menu ul a,
+html body #menuContainer #menuContainer_float ul a {
+  color: #000;
+  text-decoration: none;
+}
+html body #menuContainer #menuContainer_menu ul a:hover,
+html body #menuContainer #menuContainer_float ul a:hover {
+  color: #555;
+}
+html body #menuContainer #menuContainer_menu ul span.selected,
+html body #menuContainer #menuContainer_float ul span.selected {
+  color: #555;
+  font-weight: bold;
+}
+html body #menuContainer #menuContainer_menu input {
+  width: 70%;
+}
+html body #menuContainer #menuContainer_float li {
+  margin: 10px 0px 10px 0px;
+}
+html body #menuContainer #menuContainer_float input {
+  width: 90%;
+}
+html body #menuContainer #menuContainer_float .name {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+html body #menuContainer #menuContainer_float .url {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+html body #content {
+  height: 100%;
+}
+html body #content .toolbar {
+  padding: 5px 5px 0px 5px;
+  background: linear-gradient(to bottom, #fff 0, #e0e0e0 100%);
+  border-bottom: solid 1px #ccc;
+}
+html body #content .toolbar .main_toolbar {
+  float: right;
+}
+html body #content .toolbar label {
+  margin: 0px 0px 5px 0px;
+  font-weight: normal;
+}
+html body #content .toolbar .tab {
+  position: relative;
+  bottom: -6px;
+  display: inline-block;
+  border: solid 1px #ccc;
+  padding: 3px 10px 5px 10px;
+  margin: 0px 3px 0px 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  cursor: pointer;
+  background: #fff;
+}
+html body #content .toolbar .active {
+  background: #ccc;
+  cursor: default;
+}
+html body #content #content_texthtml .toolbar,
+html body #content #content_galleryhtml .toolbar {
+  background: #ccc;
+  padding: 5px;
+}
+html body #content_gallerygallery,
+html body #gallery {
+  background: #fff;
+}
+html body #content_gallerygallery .toolbar,
+html body #gallery .toolbar {
+  background: #ccc;
+  padding: 5px;
+}
+html body #content_gallerygallery .toolbar .share_control,
+html body #gallery .toolbar .share_control {
+  padding: 1px 3px;
+  min-width: 120px;
+  cursor: pointer;
+  border: solid 1px #ccc;
+  background: #fff;
+  z-index: 3;
+}
+html body #content_gallerygallery .toolbar .share_control td,
+html body #gallery .toolbar .share_control td {
+  font-size: 12px;
+  padding: 2px;
+}
+html body #content_gallerygallery .toolbar .doUpload,
+html body #gallery .toolbar .doUpload {
+  background-image: url("/images/cms/progress.png");
+  background-repeat: no-repeat;
+  background-size: 0 100%;
+}
+html body #content_gallerygallery .folder,
+html body #gallery .folder {
+  position: relative;
+  width: 128px;
+  float: left;
+  margin: 10px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 12px;
+}
+html body #content_gallerygallery .folder .doDelete,
+html body #gallery .folder .doDelete {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+html body #content_gallerygallery .folder div,
+html body #gallery .folder div {
+  width: 128px;
+  height: 128px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  border: solid 1px #ccc;
+}
+html body #content_gallerygallery .folder div img,
+html body #gallery .folder div img {
+  border: solid 1px #ccc;
+}
+html body #content_gallerygallery .folder input,
+html body #gallery .folder input {
+  width: 128px;
+  text-align: center;
+  background: none;
+  border: solid 1px #fff;
+}
+html body #content_gallerygallery .folder .focused,
+html body #gallery .folder .focused {
+  border: solid 1px #000;
+}
+html body #content_text,
+html body #content_gallerygallery {
+  height: 90%;
+}
+html body #content_text .CodeMirror,
+html body #content_gallerygallery .CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
+html body #content_settings table tr td {
+  padding: 10px;
+}
+html body #content_settings table tr td .error {
+  font-size: 12;
+  color: #f00;
+}
+html .articles .article,
+html .containers .article {
+  margin: 10px;
+}
+html .articles .toolbar,
+html .containers .toolbar {
+  background: #ccc !important;
+  text-align: left;
+  padding: 5px !important;
+}
+html .articles .article_container,
+html .containers .article_container {
+  overflow: auto;
+}
+html .discography {
+  overflow: auto;
+}
+html .discography label {
+  font-weight: normal;
+}
+html .discography input {
+  display: inline;
+  width: auto;
+}
+html .discography .left {
+  float: left;
+  text-align: center;
+  margin: 10px;
+  width: 360px;
+}
+html .discography .left label {
+  width: 100%;
+}
+html .discography .left div {
+  border: solid 1px #ccc;
+  background: #fff;
+  width: 80%;
+  height: 70%;
+  margin: auto;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+html .discography .left .album-image {
+  width: 250px;
+  height: 250px;
+  padding: 10px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+html .discography .right {
+  overflow: auto;
+  height: 360px;
+  margin: 10px;
+}
+html .discography .right table {
+  text-align: center;
+}
+html .discography .right table td {
+  padding: 2px 0px 2px 0px;
+}
+html .discography .right table td.number {
+  width: 6%;
+}
+html .discography .right table th {
+  text-align: center;
+  font-size: 90%;
+}
+html .discography .right input {
+  width: 100%;
+}
+html .discography .right .file {
+  display: inline;
+  width: auto;
+}
+html .discography .album {
+  margin: 10px;
+  border-radius: 5px;
+  border: solid 1px #ccc;
+  background: #eee;
+  padding: 5px;
+  height: 480px;
+}
+html .cms-container {
+  width: 98%;
+  height: 600px;
+  border: solid 1px #ccc;
+  margin: 1%;
+  border-radius: 10px;
+  overflow-x: hidden;
+}
+html .container-toolbar {
+  width: 100%;
+  padding: 5px 5px 0px 5px;
+  background: linear-gradient(to bottom, #fff 0, #e0e0e0 100%);
+  border-bottom: solid 1px #ccc;
+}
+html .container-toolbar .tab {
+  position: relative;
+  bottom: -6px;
+  display: inline-block;
+  border: solid 1px #ccc;
+  padding: 3px 10px 5px 10px;
+  margin: 0px 3px 0px 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  cursor: pointer;
+  background: #fff;
+}
+html .container-toolbar .active {
+  background: #ccc;
+  cursor: default;
+}
+html .right-float {
+  float: right;
+}
+html div.comment {
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+}
+html .comments-container {
+  overflow: auto;
+}
+html .comments-container ul {
+  list-style-type: none;
+}
+html .comments-container td {
+  padding: 5px;
+}
+html .comments-container .comment-form {
+  width: 100%;
+  max-width: 500px;
+  background: #ddd;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px;
+}
+html .comments-container .comment-form table {
+  width: 100%;
+}
+html .comments-container .comment-form textarea {
+  height: 6em;
+}
+html .center {
+  text-align: center;
+}
+html .concerts {
+  overflow: auto;
+}
+html .concert {
+  padding: 5px;
+  margin: 10px;
+  border-radius: 5px;
+  border: solid 1px #ccc;
+  background: #eee;
+  height: 450px;
+}
+html .concert-image {
+  width: 200px;
+  height: 200px;
+  padding: 20px;
+  border: solid 1px #ccc;
+  margin: 5px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+html .short {
+  width: 64px !important;
+}

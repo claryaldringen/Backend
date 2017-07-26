@@ -1,18 +1,24 @@
 
-class Cms.Document extends CJS.Document
+
+CJSDocument = require './ComponentJS/document'
+Content = require './content'
+MenuContainer = require './menu_container'
+
+
+class Document extends CJSDocument
 
 	getMenuContainer: ->
 		id = 'menuContainer'
 		menuContainer = @getChildById(id)
 		if not menuContainer?
-			menuContainer = new Cms.MenuContainer(id, @)
+			menuContainer = new MenuContainer(id, @)
 			menuContainer.getEvent('openPage').subscribe(@, @openPage)
 		menuContainer
 
 	getContent: ->
 		content = @getChildById('content')
 		if not content?
-			content = new Cms.Content('content', @)
+			content = new Content('content', @)
 			content.loadTypes()
 			content.getEvent('change').subscribe(@, @contentChange)
 			content.getEvent('languageChange').subscribe(@, @languageChange)
@@ -52,4 +58,8 @@ class Cms.Document extends CJS.Document
 
 		content = @getContent()
 		html += '<div id="' + content.getId() + '">' + content.getHtml() + '</div>'
+
+
+window.Cms =
+	Document: Document
 

@@ -157,10 +157,10 @@ class GalleryModel extends BaseModel{
 				try {
 					$nameId = $this->nameModel->setName($file->getName(), 'image');
 					$sortKey = $this->db->query("SELECT sort_key FROM image WHERE folder_id=%i ORDER BY sort_key DESC LIMIT 1", $folderId)->fetchSingle();
-					$this->db->query("INSERT INTO [image]", array('folder_id' => $folderId, 'name_id' => $nameId, 'hash' => $hash, 'mime' => $mime, 'type' => 'image','sort_key' => ++$sortKey));
+					$this->db->query("INSERT INTO [image]", ['folder_id' => $folderId, 'name_id' => $nameId, 'hash' => $hash, 'mime' => $mime, 'type' => 'image', 'width' => $image->getWidth(), 'height' => $image->getHeight(),'sort_key' => ++$sortKey]);
 					$this->uploadedFilesInfo[] = array('id' => $this->db->getInsertId(), 'hash' => $hash);
 
-					$image->save('./images/userimages/original/' . $hash . '.jpg');
+					$image->save('./images/userimages/original/' . $hash . '.' . $mime);
 					$sizes = array(
 						array('path' => './images/userimages/large', 'width' => 1024, 'height' => 768),
 						array('path' => './images/userimages/medium', 'width' => 240, 'height' => 180),

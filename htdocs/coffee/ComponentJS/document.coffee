@@ -1,5 +1,7 @@
 
-class CJS.Document extends CJS.Component
+Component = require './component'
+
+class Document extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -33,3 +35,5 @@ class CJS.Document extends CJS.Component
 			@bindEvents()
 			@binded = yes
 		@
+
+module.exports = Document

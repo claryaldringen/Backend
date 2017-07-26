@@ -9,4 +9,8 @@ class SiteModel extends BaseModel {
 	public function getSiteId($name) {
 		return $this->db->query("SELECT id FROM site WHERE site=%s", $name)->fetchSingle();
 	}
+
+	public function getSites() {
+		return $this->db->query("SELECT id,site FROM site")->fetchAll();
+	}
 }

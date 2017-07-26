@@ -1,5 +1,7 @@
 
-class Cms.HtmlEditor extends CJS.Component
+Component = require './ComponentJS/component'
+
+class HtmlEditor extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -46,3 +48,5 @@ class Cms.HtmlEditor extends CJS.Component
 		html += '<span class="cke_button_icon cke_button__save_icon doSave" style="background-image:url(\'http://cms.dev/bower_components/ckeditor/plugins/icons.png?t=FB9E\');background-position:0 -1704px;background-size:auto;">&nbsp;</span>'
 		html += '</a></div></div>'
 		html += '<textarea id="' + @getElTextareaId() + '" style="width: ' + @parent.width + ';height: ' + (@parent.height-90) + '">' + @text + ' </textarea>'
+
+module.exports = HtmlEditor

@@ -1,5 +1,8 @@
 
-class CJS.Component
+
+CustomEvent = require './event'
+
+class Component
 
 	constructor: (@id, @parent) ->
 		@parent.setChild(@) if @parent?
@@ -27,13 +30,13 @@ class CJS.Component
 			id = lastId + '_' + id if lastId?
 			child = child?.getChildById(id)
 			lastId = id
-		if child? then child else new CJS.Component()
+		if child? then child else new Component()
 
 	setBaseUrl: (@baseUrl) -> @
 
 	getEvent: (event) ->
 		if not @events[event]
-			@events[event] = new CJS.Event()
+			@events[event] = new CustomEvent()
 		@events[event]
 
 	getBaseUrl: ->
@@ -92,3 +95,4 @@ class CJS.Component
 
 	getHtml: -> ''
 
+module.exports = Component

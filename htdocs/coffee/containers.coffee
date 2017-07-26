@@ -1,5 +1,8 @@
 
-class Cms.Containers extends CJS.Component
+Component = require './ComponentJS/component'
+Container = require './container'
+
+class Containers extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -27,7 +30,7 @@ class Cms.Containers extends CJS.Component
 		childId = @id + '_container' + id
 		component = @getChildById(childId)
 		if not component?
-			component = new Cms.Container(childId, @)
+			component = new Container(childId, @)
 			component.setMenuId(id).setTypes(@types).setType(type).setHeight(598).load()
 		component
 
@@ -46,4 +49,4 @@ class Cms.Containers extends CJS.Component
 			html += '<div id="' + container.getId() + '" class="cms-container">' + container.getHtml() + '</div>'
 		html += '</div></div>'
 
-
+module.exports = Containers

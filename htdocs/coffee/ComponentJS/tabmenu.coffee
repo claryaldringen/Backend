@@ -1,4 +1,6 @@
 
+require './core'
+
 class CJS.TabMenu extends CJS.Component
 
 	constructor: (id, parent) ->

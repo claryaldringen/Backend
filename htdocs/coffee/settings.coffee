@@ -1,22 +1,25 @@
 
-class Cms.Settings extends CJS.Component
+Component = require './ComponentJS/component'
+UserSetting = require './user_setting'
+EmailSetting = require './email_setting'
+
+class Settings extends Component
 
 	getUserSetting: ->
 		childId= @id + '_user'
 		child = @getChildById(childId)
 		if not child?
-			child = new Cms.UserSetting(childId, @)
+			child = new UserSetting(childId, @)
 		child
 
 	getEmailSetting: ->
 		childId= @id + '_email'
 		child = @getChildById(childId)
 		if not child?
-			child = new Cms.EmailSetting(childId, @)
+			child = new EmailSetting(childId, @)
 		child
 
 	load: ->
-		console.log @getChildren()
 		child.load() for child in @getChildren()
 
 	getHtml: ->
@@ -24,3 +27,5 @@ class Cms.Settings extends CJS.Component
 		html = '<div id="' + userSetting.getId() + '">' + userSetting.getHtml() + '</div>'
 		emailSetting = @getEmailSetting();
 		html += '<div id="' + emailSetting.getId() + '">' + emailSetting.getHtml() + '</div>'
+
+module.exports = Settings

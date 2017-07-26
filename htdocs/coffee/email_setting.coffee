@@ -1,5 +1,7 @@
 
-class Cms.EmailSetting extends CJS.Component
+Component = require './ComponentJS/component'
+
+class EmailSetting extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -67,3 +69,5 @@ class Cms.EmailSetting extends CJS.Component
 		else
 			@load()
 			html = 'Loading...'
+
+module.exports = EmailSetting

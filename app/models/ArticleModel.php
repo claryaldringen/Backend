@@ -20,12 +20,6 @@ class ArticleModel extends BaseModel{
 			ORDER BY a.sort ASC,a.id DESC";
 
 		$rows = $this->db->query($sql, $this->getLanguageId(), $menuId)->fetchAll();
-		foreach($rows as &$row) {
-			if($row['id'] != $fullArticleId) {
-				$row['html'] = strip_tags($row['html'], '<h2>');
-				$row['html'] = \Nette\Utils\Strings::truncate($row['html'], 1024);
-			}
-		}
 		return $rows;
 	}
 
@@ -65,13 +59,21 @@ class ArticleModel extends BaseModel{
 	}
 
 	public function getLength($menuId) {
-		$length = $this->loadSetting($menuId)->data[$menuId]['length'];
-		if(empty($length) && $length !== 0) $length = null;
+		$length = null;
+		$settings = $this->loadSetting($menuId)->data;
+		if(!empty($settings)) {
+			$length = $settings[$menuId]['length'];
+			if (empty($length) && $length !== 0) $length = null;
+		}
 		return $length;
 	}
 
 	public function getCount($menuId) {
-		return $this->loadSetting($menuId)->data[$menuId]['count'];
+		$this->loadSetting($menuId);
+		if(isset($this->data[$menuId])) {
+			return $this->data[$menuId]['count'];
+		}
+		return 0;
 	}
 
 	private function loadSetting($menuId) {
@@ -138,6 +140,11 @@ class ArticleModel extends BaseModel{
 
 	private function moveArticleUp($menuId) {
 		$this->db->query("UPDATE article SET sort = sort + 1 WHERE menu_id=%i", $menuId);
+		return $this;
+	}
+
+	public function setArticleCategory($articleId, $menuId) {
+		$this->db->query("UPDATE article SET menu_id=? WHERE id=?", $menuId, $articleId);
 		return $this;
 	}
 

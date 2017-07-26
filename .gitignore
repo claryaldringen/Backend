@@ -7,7 +7,6 @@
 /htdocs/cavalry
 /htdocs/coffee/**/*.js
 /htdocs/coffee/**/*.map
-/htdocs/stylus/*.css
 htdocs/bower_components
 /vendor/
 composer.lock

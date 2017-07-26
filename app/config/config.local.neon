@@ -12,5 +12,5 @@ parameters:
 			database: postfix
 			profiler: TRUE
 			lazy: TRUE
-		siteId: 3
+		siteId: 6
 		adminHost: www.simplecms.dev

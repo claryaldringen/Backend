@@ -1,5 +1,8 @@
 
-class Cms.Gallery extends CJS.Component
+Component = require './ComponentJS/component'
+ShareControl = require './share_control'
+
+class Gallery extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -20,7 +23,7 @@ class Cms.Gallery extends CJS.Component
 	getShareControl: ->
 		id = @id + '_sc'
 		sc = @getChildById(id)
-		sc = new Cms.ShareControl(id, @) if not sc?
+		sc = new ShareControl(id, @) if not sc?
 		sc.setFolderId(@actualFolderId).setMenuId(@menuId)
 
 	load: () -> @sendRequest('loadGallery', {menuId: @menuId, showType: @showType}, @loadResponse)
@@ -136,3 +139,5 @@ class Cms.Gallery extends CJS.Component
 		else
 			html += 'Loading...'
 		html
+
+module.exports = Gallery

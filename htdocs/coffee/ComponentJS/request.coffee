@@ -1,4 +1,6 @@
 
-class CJS.Request
+class Request
 
 	setUrl: (@url) -> @
+
+module.exports = Request

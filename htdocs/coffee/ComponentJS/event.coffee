@@ -1,5 +1,5 @@
 
-class CJS.Event
+class Event
 
 	constructor: ->
 		@listeners = []
@@ -11,4 +11,4 @@ class CJS.Event
 	fire: -> listener.func.apply(listener.obj, Array.prototype.slice.call(arguments)) for listener in @listeners
 
 
-
+module.exports = Event

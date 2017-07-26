@@ -1,12 +1,15 @@
 
-class Cms.GalleryDocument extends CJS.Document
+Document = require './ComponentJS/document'
+Gallery = require './gallery'
+
+class GalleryDocument extends Document
 
 	setMenuId: (@menuId) -> @
 
 	getGallery: ->
 		gallery = @getChildById('gallery')
 		if not gallery?
-			gallery = new Cms.Gallery('gallery', @)
+			gallery = new Gallery('gallery', @)
 			gallery.select = (imageUrl) =>
 				links =
 					image: 'http://' + window.location.hostname + '/images/userimages/large/' + imageUrl
@@ -30,3 +33,6 @@ class Cms.GalleryDocument extends CJS.Document
 	getHtml: ->
 		content = @getGallery()
 		'<div id="' + content.getId() + '">' + content.getHtml() + '</div>'
+
+window.Cms =
+	Document: GalleryDocument

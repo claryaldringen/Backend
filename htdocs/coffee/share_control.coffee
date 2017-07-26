@@ -1,5 +1,7 @@
 
-class Cms.ShareControl extends CJS.Component
+Component = require './ComponentJS/component'
+
+class ShareControl extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -36,3 +38,5 @@ class Cms.ShareControl extends CJS.Component
 		else
 			html = '<div class="share_control doOpen">Sdílet tuto složku</div>'
 		html
+
+module.exports = ShareControl

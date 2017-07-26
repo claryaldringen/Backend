@@ -1,5 +1,9 @@
 
-class Cms.MenuContainer extends CJS.Component
+Component = require './ComponentJS/component'
+Menu = require './menu'
+FloatPages = require './float_pages'
+
+class MenuContainer extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -12,7 +16,7 @@ class Cms.MenuContainer extends CJS.Component
 		id = @getElMenuId()
 		menu = @getChildById(id)
 		if not menu?
-			menu = new Cms.Menu(id, @)
+			menu = new Menu(id, @)
 			menu.getEvent('openPage').subscribe(@, @openPage)
 			menu.load()
 		menu
@@ -21,7 +25,7 @@ class Cms.MenuContainer extends CJS.Component
 		id = @getElFloatId()
 		float = @getChildById(id)
 		if not float?
-			float = new Cms.FloatPages(id, @)
+			float = new FloatPages(id, @)
 			float.getEvent('openPage').subscribe(@, @openPage)
 			float.load()
 		float
@@ -52,3 +56,5 @@ class Cms.MenuContainer extends CJS.Component
 		html += '</div>'
 		component = @getComponent()
 		html += '<div class="left_column" id="' + component.getId() + '">' + component.getHtml() + '</div>'
+
+module.exports = MenuContainer

@@ -1,5 +1,7 @@
 
-class Cms.UserSetting extends CJS.Component
+Component = require './ComponentJS/component'
+
+class UserSetting extends Component
 
 	constructor: (id, parent) ->
 		super(id, parent)
@@ -53,3 +55,5 @@ class Cms.UserSetting extends CJS.Component
 		else
 			@load()
 			html = 'Loading...'
+
+module.exports = UserSetting
